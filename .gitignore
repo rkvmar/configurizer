@@ -1,0 +1,53 @@
+# Configurizer .gitignore
+# Selective exclusions to avoid nested git repository issues
+
+# Nested git repositories in plugins (remove .git dirs but keep plugin code)
+config/nvim/pack/**/.git/
+config/tmux/plugins/**/.git/
+
+# Neovim temporary/cache files
+config/nvim/lazy-lock.json.bak
+config/nvim/.lazy-lock.json.bak
+config/nvim/plugin/packer_compiled.lua
+
+# Tmux temporary files
+config/tmux/.tmux.conf.bak
+
+# macOS system files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# IDE/Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# SSH keys and sensitive files (security)
+config/ssh_config.key*
+config/id_*
+config/*.pem
+config/*.p12
+config/.gitcredentials
+config/.git-credentials
+
+# Sensitive configuration patterns
+config/**/secrets*
+config/**/*secret*
+config/**/*password*
+config/**/*token*
