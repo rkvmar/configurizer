@@ -120,26 +120,42 @@ fi
 
 # Install essential CLI tools
 print_status "Installing CLI tools (neovim, tmux, fzf, ripgrep, fd, zoxide)..."
-brew install neovim tmux fzf ripgrep fd zoxide
+for tool in neovim tmux fzf ripgrep fd zoxide; do
+    if brew list "$tool" &>/dev/null; then
+        print_success "$tool already installed"
+    else
+        brew install "$tool"
+        print_success "$tool installed successfully"
+    fi
+done
 
 # Install Oh My Posh
 print_status "Installing Oh My Posh..."
-if ! command_exists oh-my-posh; then
-    brew install jandedobbeleer/oh-my-posh/oh-my-posh
-    print_success "Oh My Posh installed successfully"
-else
+if brew list oh-my-posh &>/dev/null; then
     print_success "Oh My Posh already installed"
+else
+    brew tap jandedobbeleer/oh-my-posh
+    brew install oh-my-posh
+    print_success "Oh My Posh installed successfully"
 fi
 
 # Install JetBrainsMono Nerd Font
 print_status "Installing JetBrainsMono Nerd Font..."
-brew install font-jetbrains-mono-nerd-font
-print_success "JetBrainsMono Nerd Font installed successfully"
+if brew list font-jetbrains-mono-nerd-font &>/dev/null; then
+    print_success "JetBrainsMono Nerd Font already installed"
+else
+    brew install font-jetbrains-mono-nerd-font
+    print_success "JetBrainsMono Nerd Font installed successfully"
+fi
 
 # Install iTerm2
 print_status "Installing iTerm2..."
-brew install --cask iterm2
-print_success "iTerm2 installed successfully"
+if brew list --cask iterm2 &>/dev/null; then
+    print_success "iTerm2 already installed"
+else
+    brew install --cask iterm2
+    print_success "iTerm2 installed successfully"
+fi
 
 # Create config directories
 print_status "Creating configuration directories..."
