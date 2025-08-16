@@ -133,8 +133,7 @@ fi
 
 # Install JetBrainsMono Nerd Font
 print_status "Installing JetBrainsMono Nerd Font..."
-brew tap homebrew/cask-fonts
-brew install --cask font-jetbrains-mono-nerd-font
+brew install font-jetbrains-mono-nerd-font
 print_success "JetBrainsMono Nerd Font installed successfully"
 
 # Install iTerm2
