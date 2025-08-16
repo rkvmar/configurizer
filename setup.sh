@@ -236,9 +236,26 @@ if [ -d "$SCRIPT_DIR/config/iterm2" ]; then
         mkdir -p ~/Library/Application\ Support/iTerm2/DynamicProfiles/
 
         for profile in $json_profiles; do
-            profile_name=$(basename "$profile")
-            cp "$profile" ~/Library/Application\ Support/iTerm2/DynamicProfiles/
-            print_success "Copied profile: $profile_name"
+            profile_name=$(basename "$profile" .json)
+            dynamic_profile_file=~/Library/Application\ Support/iTerm2/DynamicProfiles/"$profile_name.json"
+
+            # Create a proper dynamic profiles JSON structure
+            # Remove the outer braces from the source profile and wrap it properly
+            profile_content=$(cat "$profile" | sed '1d;$d' | sed 's/^/    /')
+
+            cat > "$dynamic_profile_file" << EOF
+{
+  "Profiles": [
+    {
+$profile_content,
+      "Name": "$profile_name",
+      "Guid": "$(uuidgen)"
+    }
+  ]
+}
+EOF
+
+            print_success "Created dynamic profile: $profile_name.json"
         done
 
         print_warning "iTerm2 profiles will be available after restarting iTerm2"
